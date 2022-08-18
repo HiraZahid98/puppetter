@@ -1,0 +1,189 @@
+XPath is a language to address a set of nodes in an XML document.
+
+<book>
+  <title>Some book title</title>  //atomic value as content
+  <author>
+    <firstname>John</firstname>   //atomic value as content
+    <lastname>Doe</lastname>      //atomic value as content
+  </author>
+</book>
+
+here book is a document elment.
+
+<title level="1">Some book title</title> //level="1" is an attribute node.
+Both, the attribute node and the element node have atomic values assigned as their content.
+ The content of the title element is "Some book title", the content of the attribute node level is "1".
+
+
+<bookshelf>   //document element
+  <book id="1">
+    <title lang="en">Beautiful code</title>
+    <author>A. Oram</author>
+    <author>G. Wilson</author>
+    <year>2007</year>
+    <price currency="Euro">35.95</price>
+  </book>
+  <book id="2">
+    <title lang="de">eZ Components - Das Entwicklerhandbuch</title>
+    <author>T. Schlitt</author>
+    <author>K. Nordmann</author>
+    <year>2007</year>
+    <price currency="Euro">39.95</price>
+  </book>
+</bookshelf>
+
+
+
+
+The idea behind XPath
+The XPath language allows you to query a well-defined set of nodes from an XML document. If you write an XPath expression and have it
+ processed by an XPath interpreter engine, you will always get a set of XML document items as the result.
+/bookshelf/book/title
+If you give this expression to a XPath processor together with the XML document, you will received a set of title elements, containing the title
+for each book element in the bookshelf.
+Matching all descendants
+So far, we only presented XPath expressions which worked on direct children of certain elements. 
+In addition you can address all descendant elements of the current context using two slashes instead of a single one:
+
+//title
+
+
+/bookshelf/book/@id    //this is called absolute addressing
+
+//book/@id            // this is called relative addressing
+
+//book//@id           //
+
+//@id                 //relative addressing
+
+
+Union selections |
+
+/bookshelf/book|/bookshelf/magazine
+/bookshelf/book/title|/bookshelf/book/author
+
+The first expression would select all book elements from a bookshelf and add all magazine elements to the result set, too. 
+So, you can use this expression on both, the original example document and the enhanced version from a previous section,
+ which also contained magazines. The second expression will select all title elements of any books and all author elements.
+ Note, that you won't see any relationship between these. They are just selected in the order they appear in the document.
+ It is also possible to mix element and attribute selection in such a combined expression, since both are just nodes.
+
+
+
+
+
+<groupmembers>
+  <member>
+    <firstname>Jakob</firstname>
+    <lastname>Westhoff</lastname>
+    <x:nationality xmlns:x="http://westhoffswelt.de/EXTENDED_MEMBER_NAMESPACE">
+        german
+    </x:nationality>
+  </member>
+  <member>
+    <firstname>Tobias</firstname>
+    <lastname>Schlitt</lastname>
+  </member>
+  <member age="42">
+    <firstname>John</firstname>
+    <lastname>Doe</lastname>
+  </member>
+</groupmembers>
+
+
+
+
+what does // do
+
+
+
+
+// is different from /
+
+what is the different between text(), normalize-space()
+
+how do you change case in xpath 1.0 (not xpath 2 or higher)
+
+1. what is the different between text(), normalize-space() and .
+
+with text() we can use element text not its children.
+whenever we want to write xpath with the element text we use text() function. we cannot use the childrens text with text() function.
+for example:
+<a href=''>Click for JS
+	<span>Scholar</span>
+	<span> Frame inside the shadow dom </span>
+</a>
+
+//a[contains(text(), 'Click for JS')]
+//a[contains(., 'Click for JS')]
+//a[contains(normalize-space(), 'Click for JS')]
+all 3 above are correct 
+
+the xpath can be: //a[contains(text(),'Click for JS')]
+the xpath can be: //span[contains(text(), 'Click for JS)]
+the xpath cannot be: //a[contains(text(), Scholar)]
+
+
+dot . function basically consider element text as well as children text. 
+we can use dot function to write xpath for an element based on element's text as well as this will consider childrens text as well
+
+ what is the different between text(), normalize-space()
+
+normalize-space trim the junk space. 
+for example:
+<a href=''>Click for JS
+	<span>Scholar</span>
+	<span> Frame inside the shadow dom </span>
+</a>
+
+
+the xpath can be:  //span[normalize-space()="Frame inside the shadow dom"]
+
+
+apart from trimming normalize-apce also works as a dot function
+the xpath can be: //a[contains(normalize-space(),'Frame inside the shadow dom')]
+
+//button[normalize-space()='Click for JS Confirm']
+
+//button[contains(., 'Click for JS Confirm')]
+
+Also is //button[text()='Click for JS Confirm'] same as //button[text()='click for js confirm']
+
+2. how do you change case in xpath 1.0 (not xpath 2 or higher)
+using translate method
+3. what is a relative xpath and what is a positional xpath
+relative xpath can target DOM elemnt directly from the middle. it starts with // double forward slash. no need to write long xpath
+4. what kind of string manipulation is possible in xpath
+5. when to use contains and when to use =
+ Contains():
+Contains() is a method used in XPath expression. It is used when the value of any attribute changes dynamically, for example, login information.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
